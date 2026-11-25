@@ -237,7 +237,7 @@ static u8 rtw_chbw_to_cfg80211_chan_def(struct wiphy *wiphy, struct cfg80211_cha
 		chdef->width = NL80211_CHAN_WIDTH_80;
 	else if (bw == CHANNEL_WIDTH_160)
 		chdef->width = NL80211_CHAN_WIDTH_160;
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	else if (bw == CHANNEL_WIDTH_5)
 		chdef->width = NL80211_CHAN_WIDTH_5;
 	else if (bw == CHANNEL_WIDTH_10)
@@ -273,7 +273,7 @@ static const char *nl80211_chan_width_str(enum nl80211_chan_width cwidth)
 		return "80+80";
 	case NL80211_CHAN_WIDTH_160:
 		return "160";
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	case NL80211_CHAN_WIDTH_5:
 		return "5";
 	case NL80211_CHAN_WIDTH_10:
@@ -7036,7 +7036,7 @@ static void rtw_get_chbwoff_from_cfg80211_chan_def(
 		*offset = (chandef->center_freq1 > chan->center_freq) ?
 			HAL_PRIME_CHNL_OFFSET_LOWER : HAL_PRIME_CHNL_OFFSET_UPPER;
 		break;
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	case NL80211_CHAN_WIDTH_5:
 		*bw = CHANNEL_WIDTH_5;
 		*offset = HAL_PRIME_CHNL_OFFSET_DONT_CARE;
@@ -8838,7 +8838,7 @@ void dump_mesh_setup(void *sel, struct wiphy *wiphy, const struct mesh_setup *se
 	RTW_PRINT_SEL(sel, "sync_method:%u\n", setup->sync_method);
 #endif
 	RTW_PRINT_SEL(sel, "path_sel_proto:%u, path_metric:%u\n", setup->path_sel_proto, setup->path_metric);
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	RTW_PRINT_SEL(sel, "auth_id:%u\n", setup->auth_id);
 #endif
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
@@ -8881,7 +8881,7 @@ void dump_mesh_setup(void *sel, struct wiphy *wiphy, const struct mesh_setup *se
 	}
 #endif
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	if (setup->basic_rates) {
 		char buf[LEGACY_RATES_STR_LEN] = {0};
 
@@ -8979,7 +8979,7 @@ void dump_mesh_config(void *sel, const struct mesh_config *conf)
 	RTW_PRINT_SEL(sel, "dot11MeshAwakeWindowDuration:%u\n", conf->dot11MeshAwakeWindowDuration);
 #endif
 	
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	RTW_PRINT_SEL(sel, "plink_timeout:%u\n", conf->plink_timeout);
 #endif
 }
@@ -8995,7 +8995,7 @@ static void rtw_cfg80211_mesh_info_set_profile(struct rtw_mesh_info *minfo, cons
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 5, 0))
 	minfo->mesh_sp_id = setup->sync_method;
 #endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	minfo->mesh_auth_id = setup->auth_id;
 #else
 	if (setup->is_authenticated) {
@@ -9132,7 +9132,7 @@ static void rtw_cfg80211_mesh_cfg_set(_adapter *adapter, const struct mesh_confi
 #endif
 
 #if 0 /* driver MPM */
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	if (chk_mesh_attr(NL80211_MESHCONF_PLINK_TIMEOUT, mask));
 #endif
 #endif
@@ -9425,7 +9425,7 @@ static int cfg80211_rtw_get_mesh_config(struct wiphy *wiphy, struct net_device *
 	conf->dot11MeshAwakeWindowDuration = 0;
 #endif
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(7, 2, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0))
 	conf->plink_timeout = mesh_cfg->plink_timeout;
 #endif
 
